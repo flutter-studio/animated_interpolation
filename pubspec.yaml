@@ -1,8 +1,8 @@
 name: animated_interpolation
-description: A new Flutter package.
-version: 0.0.1
-author:
-homepage:
+description: A flutter interpolation plugin inspired by the React Native interpolation animation
+version: 0.1.0
+author: flutter-studio<2534290808@qq.com>
+homepage: https://github.com/flutter-studio/animated_interpolation.git
 
 environment:
   sdk: ">=2.1.0 <3.0.0"

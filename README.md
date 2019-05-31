@@ -4,6 +4,10 @@ English | [简体中文](./README_zh-CN.md)
 
 [![pub package](https://img.shields.io/pub/v/animated_interpolation.svg)](https://pub.dartlang.org/packages/animated_interpolation)
 
+<div align=start>
+<img src="https://github.com/flutter-studio/animated_interpolation/blob/master/images/untitled.gif" width = "280" alt="图片名称" align=center />
+  </div>
+
 A flutter interpolation plugin inspired by the React Native interpolation animation
 
 

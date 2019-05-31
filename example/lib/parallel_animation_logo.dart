@@ -4,6 +4,7 @@ class AnimatedLogo1 extends AnimatedWidget {
   // The Tweens are static because they don't change.
   static final _opacityTween = new Tween<double>(begin: 0.1, end: 1.0);
   static final _sizeTween = new InterpolationTween(inputRange: [0,0.2,1], outputRange: [0,250,300]);
+  static final _colorTween = ColorInterpolation(inputRange: [0,0.2,1],outputRange: [Colors.white,Colors.green,Colors.red]);
 
   AnimatedLogo1({Key key, Animation<double> animation})
       : super(key: key, listenable: animation);
@@ -18,6 +19,7 @@ class AnimatedLogo1 extends AnimatedWidget {
           height: _sizeTween.evaluate(animation),
           width: _sizeTween.evaluate(animation),
           child: new FlutterLogo(),
+          color: _colorTween.evaluate(animation),
         ),
       ),
     );

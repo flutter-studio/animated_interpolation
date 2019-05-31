@@ -34,6 +34,65 @@ class InterpolationTween extends Animatable {
       extrapolateRight: extrapolateRight))(t);
 }
 
+class ColorInterpolationTween extends Animatable<Color> {
+  ColorInterpolationTween({
+    @required this.inputRange,
+    @required this.outputRange,
+    this.curve = const _Linear._(),
+    this.extrapolate,
+    this.extrapolateLeft = ExtrapolateType.extend,
+    this.extrapolateRight = ExtrapolateType.extend,
+  });
+
+  final List<double> inputRange;
+  final List<Color> outputRange;
+  final Curve curve;
+  final ExtrapolateType extrapolate;
+  final ExtrapolateType extrapolateLeft;
+  final ExtrapolateType extrapolateRight;
+  @override
+  Color transform(double t) {
+    // TODO: implement transform
+    return Color.fromARGB(
+      createInterpolation(InterpolationConfigType(
+              inputRange: inputRange,
+              outputRange: outputRange.map((color) => color.alpha.toDouble()).toList(),
+              curve: curve,
+              extrapolate: extrapolate,
+              extrapolateLeft: extrapolateLeft,
+              extrapolateRight: extrapolateRight))(t)
+          .toInt()
+          .clamp(0, 255),
+      createInterpolation(InterpolationConfigType(
+              inputRange: inputRange,
+              outputRange: outputRange.map((color) => color.red.toDouble()).toList(),
+              curve: curve,
+              extrapolate: extrapolate,
+              extrapolateLeft: extrapolateLeft,
+              extrapolateRight: extrapolateRight))(t)
+          .toInt()
+          .clamp(0, 255),
+      createInterpolation(InterpolationConfigType(
+              inputRange: inputRange,
+              outputRange: outputRange.map((color) => color.green.toDouble()).toList(),
+              curve: curve,
+              extrapolate: extrapolate,
+              extrapolateLeft: extrapolateLeft,
+              extrapolateRight: extrapolateRight))(t)
+          .toInt()
+          .clamp(0, 255),
+      createInterpolation(InterpolationConfigType(
+              inputRange: inputRange,
+              outputRange: outputRange.map((color) => color.blue.toDouble()).toList(),
+              curve: curve,
+              extrapolate: extrapolate,
+              extrapolateLeft: extrapolateLeft,
+              extrapolateRight: extrapolateRight))(t)
+          .toInt()
+          .clamp(0, 255),
+    );
+  }
+}
 
 enum ExtrapolateType {
   extend,

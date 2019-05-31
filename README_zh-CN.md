@@ -1,16 +1,16 @@
-English | [简体中文](./README_zh-CN.md)
+[English](./README.md) | 简体中文
 
 # animated_interpolation
 
 [![pub package](https://img.shields.io/pub/v/animated_interpolation.svg)](https://pub.dartlang.org/packages/animated_interpolation)
 
-A flutter interpolation plugin inspired by the React Native interpolation animation
+一个flutter插值动画插件，受到React Native插值动画的启发
 
 
-## Usage
-To use this plugin, add `animated_interpolation` as a [dependency in your pubspec.yaml file](https://flutter.io/platform-plugins/).
+## 使用
+要使用此插件包,请将animated_interpolation作为依赖项添加到您的`pubspec.yaml`文件中,详见[dependency in your pubspec.yaml file](https://flutter.io/platform-plugins/).
 
-## Example
+## 示例
 
 ``` dart
 import 'package:flutter/material.dart';

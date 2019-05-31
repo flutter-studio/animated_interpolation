@@ -4,6 +4,14 @@
 
 [![pub package](https://img.shields.io/pub/v/animated_interpolation.svg)](https://pub.dartlang.org/packages/animated_interpolation)
 
+
+<div align=start>
+<img src="https://github.com/flutter-studio/animated_interpolation/blob/master/untitled.gif" width = "280" alt="图片名称" align=center />
+  </div>
+
+<br/>
+<br/>
+
 一个flutter插值动画插件，受到React Native插值动画的启发
 
 

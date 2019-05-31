@@ -10,6 +10,22 @@ A flutter interpolation plugin inspired by the React Native interpolation animat
 ## Usage
 To use this plugin, add `animated_interpolation` as a [dependency in your pubspec.yaml file](https://flutter.io/platform-plugins/).
 
+### InterpolationTween
+
+
+#### constructor
+
+| Parameter  |Required | Default   | Description |
+| :------------ |:--------:|:---------------:| :-----|
+| inputRange | YES | NULL  | Set the range of input,eg: ```[0,0.2,0.5,0.8,1]``` |
+| outputRange |YES| NULL | Set the range of input eg: ```[10,100,105,200,300]``` |
+| curve |NO| ```_Linear._()``` |  Set the input/output animation curve |
+| extrapolate |NO| NULL | it will extrapolate the curve beyond the ranges given, but you can also have it clamp the output value |
+| extrapolateLeft |NO| ExtrapolateType.extend  | It will extrapolate the curve beyond the given left range |
+| extrapolateRight |NO| ExtrapolateType.extend  | It will extrapolate the curve beyond the given right range |
+
+
+
 ## Example
 
 ``` dart

@@ -10,6 +10,20 @@
 ## 使用
 要使用此插件包,请将animated_interpolation作为依赖项添加到您的`pubspec.yaml`文件中,详见[dependency in your pubspec.yaml file](https://flutter.io/platform-plugins/).
 
+### InterpolationTween
+
+
+#### 构造器
+
+| Parameter  |Required | Default   | Description |
+| :------------ |:--------:|:---------------:| :-----|
+| inputRange | YES | NULL  | 设置输入的范围,eg: ```[0,0.2,0.5,0.8,1]``` |
+| outputRange |YES| NULL | 设置输入的范围 eg: ```[10,100,105,200,300]``` |
+| curve |NO| ```_Linear._()``` | 设置输入输出的动画曲线 |
+| extrapolate |NO| NULL | it will extrapolate the curve beyond the ranges given, but you can also have it clamp the output value |
+| extrapolateLeft |NO| ExtrapolateType.extend  | It will extrapolate the curve beyond the given left range |
+| extrapolateRight |NO| ExtrapolateType.extend  | It will extrapolate the curve beyond the given right range |
+
 ## 示例
 
 ``` dart

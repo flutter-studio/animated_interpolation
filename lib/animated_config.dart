@@ -71,7 +71,7 @@ class SmartAnimatedWidgetState extends State<SmartAnimatedWidget> with SingleTic
     });
   }
 
-  animate({Duration duration}) {
+  animate() {
     if (_animating == false) {
       _controller.reset();
       _controller.forward();

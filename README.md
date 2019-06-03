@@ -31,6 +31,20 @@ To use this plugin, add `animated_interpolation` as a [dependency in your pubspe
 | extrapolateLeft |NO| ExtrapolateType.extend  | It will extrapolate the curve beyond the given left range |
 | extrapolateRight |NO| ExtrapolateType.extend  | It will extrapolate the curve beyond the given right range |
 
+### SmartAnimatedWidget
+
+#### constructor
+
+| Parameter  |Required | Default   | Description |
+| :------------ |:--------:|:---------------:| :-----|
+| from | No | NULL  | It's similar to the ```from``` for keyframes in css3,eg: ```AnimatedConfig(opacity: 0)``` |
+| to |No| NULL | It's similar to the ```to``` for keyframes in css3 ,eg:```AnimatedConfig(opacity:1)```|
+| configMap |NO| NULL |  Similar to keyframes in css3,eg:```{0:AnimatedConfig(opacity:0,translateX: 200),0.2:AnimatedConfig(opacity:1,translateX:100),1:AnimatedConfig(opacity:1,translateX:0)}``` |
+| curve |NO| ```_Linear._()``` | Set the input/output animation curve |
+| duration |NO| Duration(seconds: 1)  | Animation execution time |
+| autoPlay |NO| false  | Whether to automatically animate |
+
+
 
 
 ## Example

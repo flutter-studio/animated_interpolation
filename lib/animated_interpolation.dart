@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
-
+export 'fading.dart';
+export 'animated_config.dart';
+export 'bounce.dart';
+export 'sliding.dart';
+export 'zooming.dart';
 ///
 /// 加强型的tween，可设置多个插值，受到React Native的插值动画启发
 /// 和tween使用方法一样
@@ -120,8 +124,11 @@ class InterpolationConfigType {
     this.extrapolate,
     this.extrapolateLeft = ExtrapolateType.extend,
     this.extrapolateRight = ExtrapolateType.extend,
-  })  : assert(inputRange.length >= 2),
-        assert(outputRange.length >= 2);
+  })  : assert(inputRange != null),
+        assert(outputRange != null),
+        assert(inputRange.length >= 2),
+        assert(outputRange.length >= 2),
+        assert(inputRange.length == outputRange.length);
 
   final List<double> inputRange;
   final List<double> outputRange;
@@ -179,7 +186,7 @@ double interpolate({
   double inputMax,
   double outputMin,
   double outputMax,
-  Curve curve,
+  Curve curve = const _Linear._(),
   ExtrapolateType extrapolateLeft,
   ExtrapolateType extrapolateRight,
 }) {
@@ -227,6 +234,7 @@ double interpolate({
   }
 
   // Easing
+  if(curve == null)curve = _Linear._();
   result = curve.transform(result);
 
   // Output Range

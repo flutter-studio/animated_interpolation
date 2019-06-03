@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'parallel_animation_logo.dart';
+import 'package:animated_interpolation/animated_interpolation.dart';
 
 void main() => runApp(MyApp());
 
@@ -26,22 +27,49 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class MyHomePage extends StatefulWidget {
+class AnimatedCell extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    GlobalKey<SmartAnimatedWidgetState> key = GlobalKey<SmartAnimatedWidgetState>();
 
+    return GestureDetector(
+      onTap: () {
+        key.currentState.animate();
+        print("**************tap*************");
+      },
+      child: SmartAnimatedWidget(
+          configMap: slideOutDown,
+          key: key,
+          autoPlay: false,
+          child: Container(
+            margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 15),
+            padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 15),
+            width: double.infinity,
+            color: Colors.red.shade300,
+            child: Center(
+              child: Text("BounceIn"),
+            ),
+          )),
+    );
+  }
+}
+
+class MyHomePage extends StatefulWidget {
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text("Animation"),
       ),
-      body: Center(
-        child: LogoApp4(),
+      body: Column(
+        children: <Widget>[
+          AnimatedCell(),
+        ],
       ),
     );
   }

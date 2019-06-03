@@ -32,6 +32,26 @@
 | extrapolateLeft |NO| ExtrapolateType.extend  | It will extrapolate the curve beyond the given left range |
 | extrapolateRight |NO| ExtrapolateType.extend  | It will extrapolate the curve beyond the given right range |
 
+
+### SmartAnimatedWidget
+
+#### constructor
+
+| Parameter  |Required | Default   | Description |
+| :------------ |:--------:|:---------------:| :-----|
+| from | No | NULL  | 类似于css3里keyframes中的from,eg: ```AnimatedConfig(opacity: 0)``` |
+| to |No| NULL | 类似于css3里keyframes中的to ,eg:```AnimatedConfig(opacity:1)```|
+| configMap |NO| NULL |  类似于Css3中的keyframes,eg:```{0:AnimatedConfig(opacity:0,translateX: 200),0.2:AnimatedConfig(opacity:1,translateX:100),1:AnimatedConfig(opacity:1,translateX:0)}``` |
+| curve |NO| ```_Linear._()``` | 输入输出曲线 |
+| duration |NO| Duration(seconds: 1)  | 动画执行时间 |
+| autoPlay |NO| false  | 动画是否自动执行 |
+
+#### method
+
+| method  | Description |
+| :------------ |:--------:|
+| animate | 执行对应的动画 |
+
 ## 示例
 
 ``` dart

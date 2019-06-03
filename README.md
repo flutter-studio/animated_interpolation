@@ -44,7 +44,11 @@ To use this plugin, add `animated_interpolation` as a [dependency in your pubspe
 | duration |NO| Duration(seconds: 1)  | Animation execution time |
 | autoPlay |NO| false  | Whether to automatically animate |
 
+#### method
 
+| method  | Description |
+| :------------ |:--------:|
+| animate | Execute the appropriate animation |
 
 
 ## Example

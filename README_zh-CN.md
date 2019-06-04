@@ -53,6 +53,32 @@
 | :------------ |:--------:|
 | animate | 执行对应的动画 |
 
+
+#### configMap
+
+已经存在的configMap如下:
+
+* fadeInDown
+* fadeInUp
+* fadeInLeft
+* fadeInRight
+* fadeInDownBig
+* fadeInUpBig
+* fadeInLeftBig
+* fadeInRightBig
+
+* fadeOutDown
+* fadeOutUp
+* fadeOutLeft
+* fadeOutRight
+* fadeOutDownBig
+* fadeOutUpBig
+* fadeOutLeftBig
+* fadeOutRightBig
+<br/><br/>
+ .......
+更多configMap信息详见 [更多详情](https://github.com/flutter-studio/animated_interpolation/tree/master/lib)
+
 ## 示例
 
 ``` dart

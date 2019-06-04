@@ -52,6 +52,33 @@ To use this plugin, add `animated_interpolation` as a [dependency in your pubspe
 | animate | Execute the appropriate animation |
 
 
+#### configMap
+
+The existing configMap is shown below
+
+* fadeInDown
+* fadeInUp
+* fadeInLeft
+* fadeInRight
+* fadeInDownBig
+* fadeInUpBig
+* fadeInLeftBig
+* fadeInRightBig
+
+* fadeOutDown
+* fadeOutUp
+* fadeOutLeft
+* fadeOutRight
+* fadeOutDownBig
+* fadeOutUpBig
+* fadeOutLeftBig
+* fadeOutRightBig
+<br/><br/>
+ .......
+For more information on configMap, please see [more details](https://github.com/flutter-studio/animated_interpolation/tree/master/lib)
+
+
+
 ## Example
 
 ``` dart

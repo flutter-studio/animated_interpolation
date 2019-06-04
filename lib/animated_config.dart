@@ -228,6 +228,7 @@ class SmartAnimatedWidgetState extends State<SmartAnimatedWidget> with SingleTic
         scaleYTween.evaluate(_animation),
         1.0,
       ),
+      alignment: Alignment.center,
       child: Transform.translate(
         offset: Offset(
           translateXTween.evaluate(_animation),
@@ -238,13 +239,15 @@ class SmartAnimatedWidgetState extends State<SmartAnimatedWidget> with SingleTic
             skewXTween.evaluate(_animation),
             skewYTween.evaluate(_animation),
           ),
+          alignment: Alignment.center,
           child: Transform(
             transform: Matrix4.identity()
 
               /// 设置perspective，详情见https://medium.com/flutter/perspective-on-flutter-6f832f4d912e
               ..setEntry(3, 2, 0.001)
-              ..setRotationX(rotateXTween.evaluate(_animation))
-              ..setRotationY(rotateYTween.evaluate(_animation)),
+              ..rotateY(rotateYTween.evaluate(_animation))
+              ..rotateX(rotateXTween.evaluate(_animation)),
+            alignment: Alignment.center,
             child: Opacity(
               opacity: opacityTween.evaluate(_animation),
               child: _child,

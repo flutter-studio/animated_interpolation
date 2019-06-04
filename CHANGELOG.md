@@ -1,3 +1,9 @@
+## 0.2.0
+  * AnimatedConfig adds scaleX, scaleY, and rotate attributes
+  * Add some commonly used configMap, for example, zooming, bounce, fading, etc
+## 0.1.2
+  * add SmartAnimatedWidget
+
 ## 0.1.1
   * add ColorInterpolationTween
 

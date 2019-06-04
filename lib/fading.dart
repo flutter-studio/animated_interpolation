@@ -14,13 +14,13 @@ Map<double, AnimatedConfig> createFadeOut(AnimatedType type, double toValue) {
   };
 }
 
-Map fadeIn = {
+Map<double, AnimatedConfig> fadeIn = {
   0: AnimatedConfig(opacity: 0),
   1: AnimatedConfig(opacity: 1)
 };
 
 
-Map fadeOut = {
+Map<double, AnimatedConfig> fadeOut = {
   1: AnimatedConfig(opacity: 0),
   0: AnimatedConfig(opacity: 1)
 };

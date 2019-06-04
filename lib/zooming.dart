@@ -21,6 +21,8 @@ Map<double, AnimatedConfig> createZooming(AnimatedType type, double pivotPoint) 
     ),
     1: AnimatedConfig(
       scale: 1,
+      translateX: 0,
+      translateY: 0
     )
   };
 }
@@ -42,6 +44,8 @@ Map<double, AnimatedConfig> createZoomingOut(AnimatedType type, double pivotPoin
     ),
     0: AnimatedConfig(
       scale: 1,
+      translateX: 0,
+      translateY: 0
     )
   };
 }

@@ -4,6 +4,7 @@ export 'animated_config.dart';
 export 'bounce.dart';
 export 'sliding.dart';
 export 'zooming.dart';
+export 'light_speed.dart';
 ///
 /// 加强型的tween，可设置多个插值，受到React Native的插值动画启发
 /// 和tween使用方法一样

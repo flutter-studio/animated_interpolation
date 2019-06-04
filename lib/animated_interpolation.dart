@@ -163,7 +163,11 @@ DoubleCallBack<double> createInterpolation(InterpolationConfigType config) {
 
     ExtrapolateType extrapolateRight = config.extrapolateRight;
     if (config.extrapolate != null) extrapolateRight = config.extrapolate;
-
+    ///
+    /// 由于flutter中Curve.transform使用assert限制在0-1之间
+    /// 所以其ExtrapolateType固定设置为clamp，此处于React Native
+    /// 中不同
+    ///
     return interpolate(
       input: input,
       inputMin: config.inputRange[range],
@@ -171,8 +175,8 @@ DoubleCallBack<double> createInterpolation(InterpolationConfigType config) {
       outputMin: config.outputRange[range],
       outputMax: config.outputRange[range + 1],
       curve: config.curve,
-      extrapolateLeft: extrapolateLeft,
-      extrapolateRight: extrapolateRight,
+      extrapolateLeft: ExtrapolateType.clamp,
+      extrapolateRight: ExtrapolateType.clamp,
     );
   };
 }

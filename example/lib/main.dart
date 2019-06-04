@@ -89,6 +89,8 @@ List<AnimatedCell> cells= [
   AnimatedCell(configMap: slideOutRight,text: "slideOutRight"),
   AnimatedCell(configMap: lightSpeedIn,text: "lightSpeedIn",autoPlay: true,curve: lightSpeedInCurve,),
   AnimatedCell(configMap: lightSpeedOut,text: "lightSpeedOut",curve: lightSpeedOutCurve,),
+  AnimatedCell(configMap: flipInX,text: "flipInX",autoPlay: true,curve: flipInCurve,),
+  AnimatedCell(configMap: flipInY,text: "flipInX",autoPlay: true,curve: flipInCurve,),
 ];
 
 class MyHomePage extends StatefulWidget {

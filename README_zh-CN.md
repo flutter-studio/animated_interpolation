@@ -7,6 +7,7 @@
 
 <div align=start>
 <img src="https://github.com/flutter-studio/animated_interpolation/blob/master/untitled.gif" width = "280" alt="图片名称" align=center />
+<img src="https://github.com/flutter-studio/animated_interpolation/blob/master/untitled2.gif" width = "280" alt="图片名称" align=center />
   </div>
 
 <br/>

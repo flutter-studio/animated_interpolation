@@ -3,14 +3,14 @@ import 'animated_interpolation.dart';
 
 class AnimatedConfig {
   AnimatedConfig({
-    this.opacity = 1,
-    this.scale = 1,
-    this.translateX = 0,
-    this.translateY = 0,
-    this.skewX = 0,
-    this.skewY = 0,
-    this.rotateX = 0,
-    this.rotateY = 0,
+    this.opacity,
+    this.scale,
+    this.translateX,
+    this.translateY,
+    this.skewX,
+    this.skewY,
+    this.rotateX,
+    this.rotateY,
   });
   final double opacity;
   final double scale;
@@ -20,6 +20,8 @@ class AnimatedConfig {
   final double skewY;
   final double rotateX;
   final double rotateY;
+
+
 }
 
 enum AnimatedType { opacity, scale, translateX, translateY, skewX, skewY, rotateX, rotateY }
@@ -36,6 +38,7 @@ class SmartAnimatedWidget extends StatefulWidget {
     this.curve,
     this.duration = _kDefaultDuration,
     this.autoPlay = false,
+    this.onTransitionEnd,
   }) : super(key: key);
   final AnimatedConfig from;
   final AnimatedConfig to;
@@ -44,6 +47,7 @@ class SmartAnimatedWidget extends StatefulWidget {
   final Curve curve;
   final Duration duration;
   final bool autoPlay;
+  final VoidCallback onTransitionEnd;
 
   @override
   SmartAnimatedWidgetState createState() => SmartAnimatedWidgetState();
@@ -66,9 +70,14 @@ class SmartAnimatedWidgetState extends State<SmartAnimatedWidget> with SingleTic
     }
     _controller.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
+        if(widget.onTransitionEnd!=null)widget.onTransitionEnd();
         _animating = false;
       }
     });
+  }
+
+  reset(){
+    _controller?.reset();
   }
 
   animate() {
@@ -108,47 +117,87 @@ class SmartAnimatedWidgetState extends State<SmartAnimatedWidget> with SingleTic
     if (widget.from != null && widget.to != null) {
       AnimatedConfig fc = widget.from;
       AnimatedConfig tc = widget.to;
-      scaleTween = InterpolationTween(inputRange: inputRange, outputRange: [fc.scale, tc.scale], curve: widget.curve);
-      translateXTween = InterpolationTween(inputRange: inputRange, outputRange: [fc.translateX, tc.translateX], curve: widget.curve);
-      translateYTween = InterpolationTween(inputRange: inputRange, outputRange: [fc.translateY, tc.translateY], curve: widget.curve);
-      skewXTween = InterpolationTween(inputRange: inputRange, outputRange: [fc.skewX, tc.skewX], curve: widget.curve);
-      skewYTween = InterpolationTween(inputRange: inputRange, outputRange: [fc.skewY, tc.skewY], curve: widget.curve);
-      rotateXTween = InterpolationTween(inputRange: inputRange, outputRange: [fc.rotateX, tc.rotateX], curve: widget.curve);
-      rotateYTween = InterpolationTween(inputRange: inputRange, outputRange: [fc.rotateY, tc.rotateY], curve: widget.curve);
-      opacityTween = InterpolationTween(inputRange: inputRange, outputRange: [fc.opacity, tc.opacity], curve: widget.curve);
+      scaleTween = InterpolationTween(inputRange: inputRange, outputRange: [fc.scale??1, tc.scale??1], curve: widget.curve);
+      translateXTween = InterpolationTween(inputRange: inputRange, outputRange: [fc.translateX??0, tc.translateX??0], curve: widget.curve);
+      translateYTween = InterpolationTween(inputRange: inputRange, outputRange: [fc.translateY??0, tc.translateY??0], curve: widget.curve);
+      skewXTween = InterpolationTween(inputRange: inputRange, outputRange: [fc.skewX??0, tc.skewX??0], curve: widget.curve);
+      skewYTween = InterpolationTween(inputRange: inputRange, outputRange: [fc.skewY??0, tc.skewY??0], curve: widget.curve);
+      rotateXTween = InterpolationTween(inputRange: inputRange, outputRange: [fc.rotateX??0, tc.rotateX??0], curve: widget.curve);
+      rotateYTween = InterpolationTween(inputRange: inputRange, outputRange: [fc.rotateY??0, tc.rotateY??0], curve: widget.curve);
+      opacityTween = InterpolationTween(inputRange: inputRange, outputRange: [fc.opacity??1, tc.opacity??1], curve: widget.curve);
     }
     if (widget.configMap != null) {
-      List<double> inputRange = [];
-      List<double> scaleOutRange = [];
-      List<double> translateXOutRange = [];
-      List<double> translateYOutRange = [];
-      List<double> skewXOutRange = [];
-      List<double> skewYOutRange = [];
-      List<double> rotateXOutRange = [];
-      List<double> rotateYOutRange = [];
-      List<double> opacityOutRange = [];
+      List<double> scaleOutRange = [], scaleInputRange = [];
+      List<double> translateXOutRange = [], translateXInputRange = [];
+      List<double> translateYOutRange = [], translateYInputRange = [];
+      List<double> skewXOutRange = [], skewXInputRange = [];
+      List<double> skewYOutRange = [], skewYInputRange = [];
+      List<double> rotateXOutRange = [], rotateXInputRange = [];
+      List<double> rotateYOutRange = [], rotateYInputRange = [];
+      List<double> opacityOutRange = [], opacityInputRange = [];
       List<double> keysList = widget.configMap.keys.toList();
+      Map<double, AnimatedConfig> configs = widget.configMap;
       keysList.sort(); //从小到大排序
       for (int i = 0; i < keysList.length; i++) {
         double key = keysList.elementAt(i);
-        inputRange.add(key);
-        scaleOutRange.add(widget.configMap[key].scale);
-        translateXOutRange.add(widget.configMap[key].translateX);
-        translateYOutRange.add(widget.configMap[key].translateY);
-        skewXOutRange.add(widget.configMap[key].skewX);
-        skewYOutRange.add(widget.configMap[key].skewY);
-        rotateXOutRange.add(widget.configMap[key].rotateX);
-        rotateYOutRange.add(widget.configMap[key].rotateY);
-        opacityOutRange.add(widget.configMap[key].opacity);
+        AnimatedConfig config = configs[key];
+        if (config.scale != null) {
+          scaleInputRange.add(key);
+          scaleOutRange.add(config.scale);
+        }
+        if (config.translateX != null) {
+          translateXInputRange.add(key);
+          translateXOutRange.add(config.translateX);
+        }
+        if (config.translateY != null) {
+          translateYInputRange.add(key);
+          translateYOutRange.add(config.translateY);
+        }
+        if (config.skewX != null) {
+          skewXInputRange.add(key);
+          skewXOutRange.add(config.skewX);
+        }
+        if (config.skewY != null) {
+          skewYInputRange.add(key);
+          skewYOutRange.add(config.skewY);
+        }
+        if (config.rotateX != null) {
+          rotateXInputRange.add(key);
+          rotateXOutRange.add(config.rotateX);
+        }
+        if (config.rotateY != null) {
+          rotateYInputRange.add(key);
+          rotateYOutRange.add(config.rotateY);
+        }
+        if (config.opacity != null) {
+          opacityInputRange.add(key);
+          opacityOutRange.add(config.opacity);
+        }
       }
-      scaleTween = InterpolationTween(inputRange: inputRange, outputRange: scaleOutRange, curve: widget.curve);
-      translateXTween = InterpolationTween(inputRange: inputRange, outputRange: translateXOutRange, curve: widget.curve);
-      translateYTween = InterpolationTween(inputRange: inputRange, outputRange: translateYOutRange, curve: widget.curve);
-      skewXTween = InterpolationTween(inputRange: inputRange, outputRange: skewXOutRange, curve: widget.curve);
-      skewYTween = InterpolationTween(inputRange: inputRange, outputRange: skewYOutRange, curve: widget.curve);
-      rotateXTween = InterpolationTween(inputRange: inputRange, outputRange: rotateXOutRange, curve: widget.curve);
-      rotateYTween = InterpolationTween(inputRange: inputRange, outputRange: rotateYOutRange, curve: widget.curve);
-      opacityTween = InterpolationTween(inputRange: inputRange, outputRange: opacityOutRange, curve: widget.curve);
+
+      ///获取默认的输入
+      List<double> _defaultIR(List<double> ir) => ir.length > 0 ? ir : [0, 1];
+      Map<AnimatedType, double> _defaultORMap = {
+        AnimatedType.opacity: 1,
+        AnimatedType.scale: 1,
+        AnimatedType.translateX: 0,
+        AnimatedType.translateY: 0,
+        AnimatedType.skewX: 0,
+        AnimatedType.skewY: 0,
+        AnimatedType.rotateX: 0,
+        AnimatedType.rotateY: 0,
+      };
+      ///获取默认的输出
+      List<double> _defaultOR(List<double> or, AnimatedType type) => or.length > 0 ? or : [_defaultORMap[type], _defaultORMap[type]];
+
+      scaleTween = InterpolationTween(inputRange: _defaultIR(scaleInputRange), outputRange: _defaultOR(scaleOutRange, AnimatedType.scale), curve: widget.curve);
+      translateXTween = InterpolationTween(inputRange: _defaultIR(translateXInputRange), outputRange: _defaultOR(translateXOutRange, AnimatedType.translateX), curve: widget.curve);
+      translateYTween = InterpolationTween(inputRange: _defaultIR(translateYInputRange), outputRange: _defaultOR(translateYOutRange, AnimatedType.translateY), curve: widget.curve);
+      skewXTween = InterpolationTween(inputRange: _defaultIR(skewXInputRange), outputRange: _defaultOR(skewXOutRange, AnimatedType.skewX), curve: widget.curve);
+      skewYTween = InterpolationTween(inputRange: _defaultIR(skewYInputRange), outputRange: _defaultOR(skewYOutRange, AnimatedType.skewY), curve: widget.curve);
+      rotateXTween = InterpolationTween(inputRange: _defaultIR(rotateXInputRange), outputRange: _defaultOR(rotateXOutRange, AnimatedType.rotateX), curve: widget.curve);
+      rotateYTween = InterpolationTween(inputRange: _defaultIR(rotateYInputRange), outputRange: _defaultOR(rotateYOutRange, AnimatedType.rotateY), curve: widget.curve);
+      opacityTween = InterpolationTween(inputRange: _defaultIR(opacityInputRange), outputRange: _defaultOR(opacityOutRange, AnimatedType.opacity), curve: widget.curve);
     }
 
     return Transform.scale(

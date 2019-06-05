@@ -46,11 +46,13 @@ class AnimatedCell extends StatelessWidget {
           key: key,
           autoPlay: autoPlay,
           curve: curve,
-          onTransitionEnd: (){
+          onAnimationEnd: (){
             Future.delayed(Duration(milliseconds: 200),(){
               if(autoPlay == false)key.currentState.reset();
             });
           },
+          iterationCount: 1,
+          direction: AnimatedDirection.normal,
           child: Container(
             margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 15),
             padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 15),

@@ -1,9 +1,13 @@
+## 0.2.5
+  * Add properties onAnimationBegin, onAnimationEnd, iterationCount, direction, delay, iterationDelay, and iterationInfinite
+
 ## 0.2.1
   * Add flipInX flipInY flipOutX flipOutY
 
 ## 0.2.0
   * AnimatedConfig adds scaleX, scaleY, and rotate attributes
   * Add some commonly used configMap, for example, zooming, bounce, fading, etc
+
 ## 0.1.2
   * add SmartAnimatedWidget
 

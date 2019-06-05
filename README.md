@@ -79,7 +79,28 @@ For more information on configMap, please see [more details](https://github.com/
 
 
 
+
+
 ## Example
+
+```
+import 'package:flutter/material.dart';
+import 'package:animated_interpolation/animated_interpolation.dart';
+SmartAnimatedWidget(
+        configMap: fadeInDown,
+        autoPlay: true,
+        child: Container(
+          margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 15),
+          padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 15),
+          width: double.infinity,
+          color: Colors.red.shade300,
+          child: Center(
+            child: Text(text),
+          ),
+        ),
+      )
+
+```
 
 ``` dart
 import 'package:flutter/material.dart';

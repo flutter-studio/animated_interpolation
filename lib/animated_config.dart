@@ -32,18 +32,26 @@ enum AnimatedType { opacity, scale, translateX, translateY, skewX, skewY, rotate
 
 const Duration _kDefaultDuration = const Duration(seconds: 1);
 
+enum AnimatedDirection { normal, reverse, alternate, alternateReverse }
+
 class SmartAnimatedWidget extends StatefulWidget {
-  SmartAnimatedWidget({
-    Key key,
-    this.from,
-    this.to,
-    this.configMap,
-    this.child,
-    this.curve,
-    this.duration = _kDefaultDuration,
-    this.autoPlay = false,
-    this.onTransitionEnd,
-  }) : super(key: key);
+  SmartAnimatedWidget(
+      {Key key,
+      this.from,
+      this.to,
+      this.configMap,
+      this.child,
+      this.curve,
+      this.duration = _kDefaultDuration,
+      this.autoPlay = false,
+      this.onAnimationEnd,
+      this.onAnimationBegin,
+      this.iterationCount = 1,
+      this.iterationInfinite = false,
+      this.direction = AnimatedDirection.normal,
+      this.delay = const Duration(seconds: 0),
+      this.iterationDelay = const Duration(seconds: 0)})
+      : super(key: key);
   final AnimatedConfig from;
   final AnimatedConfig to;
   final Map<double, AnimatedConfig> configMap;
@@ -51,50 +59,145 @@ class SmartAnimatedWidget extends StatefulWidget {
   final Curve curve;
   final Duration duration;
   final bool autoPlay;
-  final VoidCallback onTransitionEnd;
+  final VoidCallback onAnimationEnd;
+  final VoidCallback onAnimationBegin;
+  final int iterationCount;
+  final AnimatedDirection direction;
+  final Duration delay;
+  final Duration iterationDelay;
+  final bool iterationInfinite;
 
   @override
   SmartAnimatedWidgetState createState() => SmartAnimatedWidgetState();
 }
 
+enum _ad {
+  forward,
+  reverse,
+}
+
+typedef ValueCallBack<T> = T Function(T t);
+
 class SmartAnimatedWidgetState extends State<SmartAnimatedWidget> with SingleTickerProviderStateMixin<SmartAnimatedWidget> {
   AnimationController _controller;
   Animation<double> _animation;
   bool _animating = false; //是否正在动画
+  int _iteration = 0;
+  Map<double,AnimatedConfig> _configMap ;
+
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
+    _configMap = widget.configMap;
     _controller = AnimationController(vsync: this, duration: widget.duration);
-    _animation = Tween<double>(begin: 0, end: 1).animate(_controller);
+    _animation = Tween<double>(begin: _begin(), end: 1 - _begin()).animate(_controller);
     if (widget.autoPlay == true) {
-      _controller.forward();
-      _animating = true;
+      animate();
     }
-    _controller.addStatusListener((status) {
-      if (status == AnimationStatus.completed) {
-        if (widget.onTransitionEnd != null) widget.onTransitionEnd();
-        _animating = false;
-      }
+   // _controller.addStatusListener(_addStatusListener);
+  }
+
+
+  @override
+  void didUpdateWidget(SmartAnimatedWidget oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    _configMap = widget.configMap;
+  }
+
+  get animating => _animating;
+
+  ///
+  /// 完成动画
+  ///
+  _finishAnimation() {
+    if (widget.onAnimationEnd != null) widget.onAnimationEnd();
+    _animating = false;
+    _iteration = 0;
+  }
+
+  ///
+  /// 是否可以动画
+  ///
+  bool _canAnimated() => widget.iterationInfinite == true || _iteration < widget.iterationCount;
+
+  ///
+  /// 获取Tween的开始值
+  ///
+  double _begin() {
+    switch (widget.direction) {
+      case AnimatedDirection.reverse:
+      case AnimatedDirection.alternateReverse:
+        return 1;
+      case AnimatedDirection.alternate:
+      default:
+        return 0;
+    }
+  }
+
+  void animate() {
+    if (_animating == true) return;
+    Future.delayed(widget.delay, () {
+      if(widget.onAnimationBegin!=null)widget.onAnimationBegin();
+      _controller?.removeStatusListener(_addStatusListener);
+      _controller?.reset();
+      _controller?.addStatusListener(_addStatusListener);
+      _controller?.forward();
+      _iteration ++;
+      _animating = true;
     });
   }
 
-  reset() {
-    _controller?.reset();
+  ///
+  /// 开始动画，内部使用
+  ///
+  void _animate(_ad ad, double from) {
+    if (_canAnimated() == true) {
+    Future.delayed(widget.iterationDelay, () {
+        if (ad == _ad.forward) {
+          _controller?.forward(from: from);
+        } else {
+          _controller?.reverse(from: from);
+        }
+        _iteration++;
+      });
+    } else {
+      _finishAnimation();
+    }
   }
 
-  animate() {
-    if (_animating == false) {
-      _controller.reset();
-      _controller.forward();
-      _animating = true;
+  ///添加动画状态监听
+  void _addStatusListener(AnimationStatus status) {
+    switch (widget.direction) {
+      case AnimatedDirection.alternate:
+      case AnimatedDirection.alternateReverse:
+        if (status == AnimationStatus.completed) {
+          if (_iteration % 2 == 1) _animate(_ad.reverse, 1);
+          if (_canAnimated() == false) _finishAnimation();
+        } else if (status == AnimationStatus.dismissed) {
+          if (_iteration % 2 == 0) _animate(_ad.forward, 0);
+          if (_canAnimated() == false) _finishAnimation();
+        }
+        break;
+      case AnimatedDirection.reverse:
+      default:
+        if (status == AnimationStatus.completed) {
+          _animate(_ad.forward, 0);
+        } else if (status == AnimationStatus.dismissed) {
+          if (_canAnimated() == false) _finishAnimation();
+        }
     }
+  }
+
+  reset() {
+    _controller?.removeStatusListener(_addStatusListener);
+    _controller?.reset();
   }
 
   @override
   void dispose() {
     // TODO: implement dispose
+    _controller?.removeStatusListener(_addStatusListener);
     _controller?.dispose();
     super.dispose();
   }
@@ -132,7 +235,7 @@ class SmartAnimatedWidgetState extends State<SmartAnimatedWidget> with SingleTic
       rotateYTween = InterpolationTween(inputRange: inputRange, outputRange: [fc.rotateY ?? fc.rotate ?? 0, tc.rotateY ?? tc.rotate ?? 0], curve: widget.curve);
       opacityTween = InterpolationTween(inputRange: inputRange, outputRange: [fc.opacity ?? 1, tc.opacity ?? 1], curve: widget.curve);
     }
-    if (widget.configMap != null) {
+    if (_configMap != null) {
       List<double> scaleXOutRange = [], scaleXInputRange = [];
       List<double> scaleYOutRange = [], scaleYInputRange = [];
       List<double> translateXOutRange = [], translateXInputRange = [];
@@ -142,8 +245,8 @@ class SmartAnimatedWidgetState extends State<SmartAnimatedWidget> with SingleTic
       List<double> rotateXOutRange = [], rotateXInputRange = [];
       List<double> rotateYOutRange = [], rotateYInputRange = [];
       List<double> opacityOutRange = [], opacityInputRange = [];
-      List<double> keysList = widget.configMap.keys.toList();
-      Map<double, AnimatedConfig> configs = widget.configMap;
+      List<double> keysList =_configMap.keys.toList();
+      Map<double, AnimatedConfig> configs = _configMap;
       keysList.sort(); //从小到大排序
       for (int i = 0; i < keysList.length; i++) {
         double key = keysList.elementAt(i);
@@ -257,4 +360,12 @@ class SmartAnimatedWidgetState extends State<SmartAnimatedWidget> with SingleTic
       ),
     );
   }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _configMap = widget.configMap;
+  }
+
+
 }

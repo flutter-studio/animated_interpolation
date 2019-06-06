@@ -44,6 +44,13 @@ To use this plugin, add `animated_interpolation` as a [dependency in your pubspe
 | curve |NO| ```_Linear._()``` | Set the input/output animation curve |
 | duration |NO| Duration(seconds: 1)  | Animation execution time |
 | autoPlay |NO| false  | Whether to automatically animate |
+| onAnimationStart | NO | NULL |A function that is called when the animation has been started.|
+| onAnimationEnd | NO | NULL |A function that is called when the animation has been completed successfully or cancelled|
+| delay | NO | Duration(seconds:0)| Optionally delay animation |
+| iterationCount | NO | 1 | How many times to run the animation |
+| iterationInfinite| NO | false | Whether to loop through the animation |
+| iterationDelay | NO | Duration(seconds: 0)| For how long to pause between animation iterations |
+| direction| NO| AnimatedDirection.normal |Direction of animation, especially useful for repeating animations. Valid values: `AnimatedDirection.normal`, `AnimatedDirection.reverse`, `AnimatedDirection.alternate`, `AnimatedDirection.alternate-reverse`|
 
 #### method
 

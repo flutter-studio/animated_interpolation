@@ -50,7 +50,7 @@ To use this plugin, add `animated_interpolation` as a [dependency in your pubspe
 | iterationCount | NO | 1 | How many times to run the animation |
 | iterationInfinite| NO | false | Whether to loop through the animation |
 | iterationDelay | NO | Duration(seconds: 0)| For how long to pause between animation iterations |
-| direction| NO| AnimatedDirection.normal |Direction of animation, especially useful for repeating animations. Valid values: `AnimatedDirection.normal`, `AnimatedDirection.reverse`, `AnimatedDirection.alternate`, `AnimatedDirection.alternate-reverse`|
+| direction| NO| AnimatedDirection.normal |Direction of animation, especially useful for repeating animations. Valid values: `AnimatedDirection.normal`, `AnimatedDirection.reverse`, `AnimatedDirection.alternate`, `AnimatedDirection.alternateReverse`|
 
 #### method
 

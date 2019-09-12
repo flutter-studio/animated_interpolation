@@ -5,9 +5,9 @@ English | [简体中文](./README_zh-CN.md)
 [![pub package](https://img.shields.io/pub/v/animated_interpolation.svg)](https://pub.dartlang.org/packages/animated_interpolation)
 
 <div align=start>
-<img src="https://github.com/flutter-studio/animated_interpolation/blob/master/untitled.gif" width = "280" alt="图片名称" align=center />
-<img src="https://github.com/flutter-studio/animated_interpolation/blob/master/untitled2.gif" width = "280" alt="图片名称" align=center />
-<img src="https://github.com/flutter-studio/animated_interpolation/blob/master/untitled3.gif" width = "280" alt="图片名称" align=center />
+<img src="https://github.com/flutter-studio/animated_interpolation/blob/master/untitled.gif" width = "200" alt="图片名称" align=center />
+<img src="https://github.com/flutter-studio/animated_interpolation/blob/master/untitled2.gif" width = "200" alt="图片名称" align=center />
+<img src="https://github.com/flutter-studio/animated_interpolation/blob/master/untitled3.gif" width = "200" alt="图片名称" align=center />
   </div>
 
 <br/>

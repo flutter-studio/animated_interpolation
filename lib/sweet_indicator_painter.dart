@@ -58,20 +58,21 @@ class SweetIndicatorPainter extends IndicatorPainter {
     }
 
     double value = controller.animation.value;
+    int step = (tabIndex - controller.previousIndex).abs();
     if (value == tabIndex)
       return Rect.fromLTRB(tabLeft, 0.0, tabRight, tabBarSize.height);
     //return Rect.fromLTWH(tabLeft, 0.0, tabRight - tabLeft, tabBarSize.height);
     else if (value > tabIndex.toDouble()) {
       return Rect.fromLTRB(
           tabLeft +
-              (currentTabOffsets[tabIndex + 1] -
+              (currentTabOffsets[tabIndex + step] -
                       tabLeft +
-                      getDelta(tabIndex + 1)) *
+                      getDelta(tabIndex + step)) *
                   InterpolationTween(
                     inputRange: [
                       tabIndex.toDouble(),
-                      tabIndex.toDouble() + 0.5,
-                      tabIndex.toDouble() + 1
+                      tabIndex.toDouble() + step/2.0,
+                      tabIndex.toDouble() + step
                     ],
                     outputRange: [0, 0, 1],
                   ).evaluate(
@@ -79,14 +80,14 @@ class SweetIndicatorPainter extends IndicatorPainter {
                   ),
           0.0,
           tabRight +
-              (currentTabOffsets[tabIndex + 2] -
+              (currentTabOffsets[tabIndex + step + 1] -
                       tabRight -
-                      getDelta(tabIndex + 1)) *
+                      getDelta(tabIndex + step)) *
                   InterpolationTween(
                     inputRange: [
                       tabIndex.toDouble(),
-                      tabIndex.toDouble() + 0.5,
-                      tabIndex.toDouble() + 1
+                      tabIndex.toDouble() + step/2,
+                      tabIndex.toDouble() + step
                     ],
                     outputRange: [0, 1, 1],
                   ).evaluate(
@@ -96,13 +97,13 @@ class SweetIndicatorPainter extends IndicatorPainter {
     } else
       return Rect.fromLTRB(
           tabLeft +
-              (currentTabOffsets[tabIndex - 1] -
+              (currentTabOffsets[tabIndex - step] -
                       tabLeft +
-                      getDelta(tabIndex - 1)) *
+                      getDelta(tabIndex - step)) *
                   InterpolationTween(
                     inputRange: [
-                      tabIndex.toDouble() - 1,
-                      tabIndex.toDouble() - 0.5,
+                      tabIndex.toDouble() - step,
+                      tabIndex.toDouble() - step/2,
                       tabIndex.toDouble(),
                     ],
                     outputRange: [1, 1, 0],
@@ -113,11 +114,11 @@ class SweetIndicatorPainter extends IndicatorPainter {
           tabRight +
               (currentTabOffsets[tabIndex] -
                       tabRight -
-                      getDelta(tabIndex - 1)) *
+                      getDelta(tabIndex - step)) *
                   InterpolationTween(
                     inputRange: [
-                      tabIndex.toDouble() - 1,
-                      tabIndex.toDouble() - 0.5,
+                      tabIndex.toDouble() - step,
+                      tabIndex.toDouble() - step/2,
                       tabIndex.toDouble(),
                     ],
                     outputRange: [1, 0, 0],

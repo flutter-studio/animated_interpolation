@@ -96,7 +96,7 @@ For more information on configMap, please see [more details](https://github.com/
 
 ## Example
 
-```
+```dart
 import 'package:flutter/material.dart';
 import 'package:animated_interpolation/animated_interpolation.dart';
 SmartAnimatedWidget(

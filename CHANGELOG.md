@@ -1,3 +1,6 @@
+## 0.3.1
+  * fix some bugs
+
 ## 0.3.0
   * add SmartTabBar,SweetIndicatorPainter
 

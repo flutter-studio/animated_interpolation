@@ -9,14 +9,13 @@ typedef IndexedWidgetBuilder = Widget Function(BuildContext context, int index);
 
 ///indicator 构建函数
 typedef IndicatorBuilder = IndicatorPainter Function(
-    BuildContext context,
-    TabController controller,
-    Decoration indicator,
-    TabBarIndicatorSize indicatorSize,
-    List<GlobalKey> tabKeys,
-    IndicatorPainter old,
-    );
-
+  BuildContext context,
+  TabController controller,
+  Decoration indicator,
+  TabBarIndicatorSize indicatorSize,
+  List<GlobalKey> tabKeys,
+  IndicatorPainter old,
+);
 
 ///智能的tabbar组件，在原有的基础上进行修改
 ///添加indicatorBuilder属性
@@ -291,22 +290,22 @@ class _TabBarState extends State<SmartTabBar> {
     _indicatorPainter = !_controllerIsValid
         ? null
         : widget.indicatorBuilder != null
-        ? widget.indicatorBuilder(
-      context,
-      _controller,
-      _indicator,
-      widget.indicatorSize ?? TabBarTheme.of(context).indicatorSize,
-      _tabKeys,
-      _indicatorPainter,
-    )
-        : _IndicatorPainter(
-      controller: _controller,
-      indicator: _indicator,
-      indicatorSize: widget.indicatorSize ??
-          TabBarTheme.of(context).indicatorSize,
-      tabKeys: _tabKeys,
-      old: _indicatorPainter,
-    );
+            ? widget.indicatorBuilder(
+                context,
+                _controller,
+                _indicator,
+                widget.indicatorSize ?? TabBarTheme.of(context).indicatorSize,
+                _tabKeys,
+                _indicatorPainter,
+              )
+            : _IndicatorPainter(
+                controller: _controller,
+                indicator: _indicator,
+                indicatorSize: widget.indicatorSize ??
+                    TabBarTheme.of(context).indicatorSize,
+                tabKeys: _tabKeys,
+                old: _indicatorPainter,
+              );
   }
 
   @override
@@ -385,7 +384,7 @@ class _TabBarState extends State<SmartTabBar> {
 
   void _scrollToControllerValue() {
     final double leadingPosition =
-    _currentIndex > 0 ? _tabCenteredScrollOffset(_currentIndex - 1) : null;
+        _currentIndex > 0 ? _tabCenteredScrollOffset(_currentIndex - 1) : null;
     final double middlePosition = _tabCenteredScrollOffset(_currentIndex);
     final double trailingPosition = _currentIndex < maxTabIndex
         ? _tabCenteredScrollOffset(_currentIndex + 1)
@@ -467,12 +466,12 @@ class _TabBarState extends State<SmartTabBar> {
       if (_controller.length != widget.tabs.length) {
         throw FlutterError(
             'Controller\'s length property (${_controller.length}) does not match the \n'
-                'number of tabs (${widget.tabs.length}) present in TabBar\'s tabs property.');
+            'number of tabs (${widget.tabs.length}) present in TabBar\'s tabs property.');
       }
       return true;
     }());
     final MaterialLocalizations localizations =
-    MaterialLocalizations.of(context);
+        MaterialLocalizations.of(context);
     if (_controller.length == 0) {
       return Container(
         height: _kTabHeight + widget.indicatorWeight,
@@ -515,20 +514,20 @@ class _TabBarState extends State<SmartTabBar> {
         // The user is dragging the TabBarView's PageView left or right.
         final int tabIndex = _currentIndex;
         final Animation<double> centerAnimation =
-        _DragAnimation(_controller, tabIndex);
+            _DragAnimation(_controller, tabIndex);
         wrappedTabs[tabIndex] =
             _buildStyledTab(wrappedTabs[tabIndex], true, centerAnimation);
         if (_currentIndex > 0) {
           final int tabIndex = _currentIndex - 1;
           final Animation<double> previousAnimation =
-          ReverseAnimation(_DragAnimation(_controller, tabIndex));
+              ReverseAnimation(_DragAnimation(_controller, tabIndex));
           wrappedTabs[tabIndex] =
               _buildStyledTab(wrappedTabs[tabIndex], false, previousAnimation);
         }
         if (_currentIndex < widget.tabs.length - 1) {
           final int tabIndex = _currentIndex + 1;
           final Animation<double> nextAnimation =
-          ReverseAnimation(_DragAnimation(_controller, tabIndex));
+              ReverseAnimation(_DragAnimation(_controller, tabIndex));
           wrappedTabs[tabIndex] =
               _buildStyledTab(wrappedTabs[tabIndex], false, nextAnimation);
         }
@@ -621,6 +620,18 @@ abstract class IndicatorPainter extends CustomPainter {
 
   TextDirection get currentTextDirection => _currentTextDirection;
 
+  int get tabIndex => controller.index;
+
+  double get tabLeft => _currentTabOffsets[
+      _currentTextDirection == TextDirection.ltr ? tabIndex : tabIndex + 1];
+
+  double get tabRight => _currentTabOffsets[
+      _currentTextDirection == TextDirection.ltr ? tabIndex + 1 : tabIndex];
+
+  double get tabWidth => tabKeys[tabIndex].currentContext.size.width;
+
+  double get tabHeight => tabKeys[tabIndex].currentContext.size.height;
+
   void saveTabOffsets(List<double> tabOffsets, TextDirection textDirection) {
     _currentTabOffsets = tabOffsets;
     _currentTextDirection = textDirection;
@@ -684,13 +695,13 @@ class _TabStyle extends AnimatedWidget {
     // To enable TextStyle.lerp(style1, style2, value), both styles must have
     // the same value of inherit. Force that to be inherit=true here.
     final TextStyle defaultStyle = (labelStyle ??
-        tabBarTheme.labelStyle ??
-        themeData.primaryTextTheme.body2)
+            tabBarTheme.labelStyle ??
+            themeData.primaryTextTheme.body2)
         .copyWith(inherit: true);
     final TextStyle defaultUnselectedStyle = (unselectedLabelStyle ??
-        tabBarTheme.unselectedLabelStyle ??
-        labelStyle ??
-        themeData.primaryTextTheme.body2)
+            tabBarTheme.unselectedLabelStyle ??
+            labelStyle ??
+            themeData.primaryTextTheme.body2)
         .copyWith(inherit: true);
     final TextStyle textStyle = selected
         ? TextStyle.lerp(defaultStyle, defaultUnselectedStyle, animation.value)
@@ -777,14 +788,14 @@ class _TabLabelBar extends Flex {
     List<Widget> children = const <Widget>[],
     this.onPerformLayout,
   }) : super(
-    key: key,
-    children: children,
-    direction: Axis.horizontal,
-    mainAxisSize: MainAxisSize.max,
-    mainAxisAlignment: MainAxisAlignment.start,
-    crossAxisAlignment: CrossAxisAlignment.center,
-    verticalDirection: VerticalDirection.down,
-  );
+          key: key,
+          children: children,
+          direction: Axis.horizontal,
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          verticalDirection: VerticalDirection.down,
+        );
 
   final _LayoutCallback onPerformLayout;
 
@@ -857,14 +868,14 @@ class _TabLabelBarRenderer extends RenderFlex {
   })  : assert(onPerformLayout != null),
         assert(textDirection != null),
         super(
-        children: children,
-        direction: direction,
-        mainAxisSize: mainAxisSize,
-        mainAxisAlignment: mainAxisAlignment,
-        crossAxisAlignment: crossAxisAlignment,
-        textDirection: textDirection,
-        verticalDirection: verticalDirection,
-      );
+          children: children,
+          direction: direction,
+          mainAxisSize: mainAxisSize,
+          mainAxisAlignment: mainAxisAlignment,
+          crossAxisAlignment: crossAxisAlignment,
+          textDirection: textDirection,
+          verticalDirection: verticalDirection,
+        );
 
   _LayoutCallback onPerformLayout;
 
@@ -903,11 +914,11 @@ class _TabBarScrollPosition extends ScrollPositionWithSingleContext {
     ScrollPosition oldPosition,
     this.tabBar,
   }) : super(
-    physics: physics,
-    context: context,
-    initialPixels: null,
-    oldPosition: oldPosition,
-  );
+          physics: physics,
+          context: context,
+          initialPixels: null,
+          oldPosition: oldPosition,
+        );
 
   final _TabBarState tabBar;
 
@@ -935,7 +946,6 @@ class _TabBarScrollPosition extends ScrollPositionWithSingleContext {
   }
 }
 
-
 class _IndicatorPainter extends IndicatorPainter {
   _IndicatorPainter({
     @required TabController controller,
@@ -944,12 +954,12 @@ class _IndicatorPainter extends IndicatorPainter {
     @required List<GlobalKey> tabKeys,
     IndicatorPainter old,
   }) : super(
-    controller: controller,
-    indicator: indicator,
-    indicatorSize: indicatorSize,
-    tabKeys: tabKeys,
-    old: old,
-  );
+          controller: controller,
+          indicator: indicator,
+          indicatorSize: indicatorSize,
+          tabKeys: tabKeys,
+          old: old,
+        );
 
   Rect _currentRect;
   BoxPainter _painter;
@@ -961,7 +971,6 @@ class _IndicatorPainter extends IndicatorPainter {
   void dispose() {
     _painter?.dispose();
   }
-
 
   Rect indicatorRect(Size tabBarSize, int tabIndex) {
     assert(_currentTabOffsets != null);
@@ -1005,7 +1014,7 @@ class _IndicatorPainter extends IndicatorPainter {
       // The user is dragging the TabBarView's PageView left or right.
       final int currentIndex = controller.index;
       final Rect previous =
-      currentIndex > 0 ? indicatorRect(size, currentIndex - 1) : null;
+          currentIndex > 0 ? indicatorRect(size, currentIndex - 1) : null;
       final Rect middle = indicatorRect(size, currentIndex);
       final Rect next = currentIndex < maxTabIndex
           ? indicatorRect(size, currentIndex + 1)
@@ -1024,7 +1033,7 @@ class _IndicatorPainter extends IndicatorPainter {
             : Rect.lerp(middle, previous, index - value);
       else
         _currentRect =
-        next == null ? middle : Rect.lerp(middle, next, value - index);
+            next == null ? middle : Rect.lerp(middle, next, value - index);
     }
     assert(_currentRect != null);
 
@@ -1034,8 +1043,6 @@ class _IndicatorPainter extends IndicatorPainter {
     );
     _painter.paint(canvas, _currentRect.topLeft, configuration);
   }
-
-
 
   @override
   bool shouldRepaint(_IndicatorPainter old) {

@@ -622,6 +622,8 @@ abstract class IndicatorPainter extends CustomPainter {
 
   int get tabIndex => controller.index;
 
+  int get preTabIndex => controller.previousIndex;
+
   double get tabLeft => _currentTabOffsets[
       _currentTextDirection == TextDirection.ltr ? tabIndex : tabIndex + 1];
 

@@ -33,6 +33,11 @@ To use this plugin, add `animated_interpolation` as a [dependency in your pubspe
 | extrapolateLeft |NO| ExtrapolateType.extend  | It will extrapolate the curve beyond the given left range |
 | extrapolateRight |NO| ExtrapolateType.extend  | It will extrapolate the curve beyond the given right range |
 
+### SmartTabBar
+
+>>The SmartTabbar Widget is formed by adding a indicatorBuilder property to the official Tabbar，It is used in the same way as the official Tabbar，For details, please see [example](https://github.com/flutter-studio/animated_interpolation/blob/master/example/lib/tabbar_example.dart)
+
+
 ### SmartAnimatedWidget
 
 #### constructor

@@ -1,3 +1,6 @@
+## 0.3.0
+  * add SmartTabBar,SweetIndicatorPainter
+
 ## 0.2.5
   * Add properties onAnimationBegin, onAnimationEnd, iterationCount, direction, delay, iterationDelay, and iterationInfinite
 

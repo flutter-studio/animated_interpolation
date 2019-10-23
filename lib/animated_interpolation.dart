@@ -16,7 +16,7 @@ export 'sweet_indicator_painter.dart';
 /// InterpolationTween(inputRange: [0,0.2,1], outputRange: [0,250,300]).evaluate(animation)
 ///
 ///
-class InterpolationTween extends Animatable {
+class InterpolationTween extends Animatable<double> {
   InterpolationTween({
     @required this.inputRange,
     @required this.outputRange,
